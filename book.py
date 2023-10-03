@@ -53,3 +53,37 @@ with open(cur_file, "r") as f:
     for word in get_all_words(f.read()):
         print(word)
 
+
+# %%
+from collections import deque
+
+
+# %%
+def DFS_classes(cls):
+    visited = set()
+
+    def traversal(cls, depth):
+        cur = cls
+        yield cur, depth
+        for sub_cls in cur.__subclasses__():
+            if sub_cls not in visited:
+                visited.add(sub_cls)
+                yield from traversal(sub_cls, depth + 1)
+
+    return traversal(cls, 0)
+
+
+def DFS_iter(cls):
+    fringe = [(cls, int(0))]
+    visited = set()
+    while fringe:
+        cur, depth = fringe.pop(0)
+        yield cur, depth
+        for sub_cls in cur.__subclasses__():
+            if sub_cls not in visited:
+                visited.add(sub_cls)
+                fringe.append((sub_cls, depth + 1))
+
+
+if __name__ == "__main__":
+    display(Exception, DFS_iter)
