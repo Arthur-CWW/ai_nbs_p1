@@ -85,5 +85,22 @@ def DFS_iter(cls):
                 fringe.append((sub_cls, depth + 1))
 
 
+def BFS_classes(cls):
+    queue = deque([(cls, 0)])
+    while queue:
+        cls, depth = queue.popleft()
+        yield cls, depth
+        for sub_cls in cls.__subclasses__():
+            queue.append((sub_cls, depth + 1))
+
+
+def tree(cls):
+    def sub_tree(cls):
+        for sub_cls in cls.__subclasses__():
+            yield sub_cls.__name__, 1
+
+    yield cls.__name__, 0
+    yield from sub_tree(cls)
+
 if __name__ == "__main__":
     display(Exception, DFS_iter)
