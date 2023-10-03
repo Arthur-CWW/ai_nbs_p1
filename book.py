@@ -36,3 +36,20 @@ def gen():
     yield 2
 
 
+# # for x in (o:=sub_gen()):
+# print([o for o in sub_gen()])
+from pathlib import Path
+import re
+
+
+def get_all_words(text):
+    for word in re.findall(r"\w+", text):
+        yield word
+
+
+cur_file = Path("book.ipynb")
+print(cur_file)
+with open(cur_file, "r") as f:
+    for word in get_all_words(f.read()):
+        print(word)
+
