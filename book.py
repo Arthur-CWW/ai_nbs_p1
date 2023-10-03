@@ -102,5 +102,23 @@ def tree(cls):
     yield cls.__name__, 0
     yield from sub_tree(cls)
 
+
+def display(cls, traversal=DFS_classes):
+    print(f"-------------------{traversal.__name__}--------------------")
+    for cls_name, level in traversal(cls):
+        indent = " " * 4 * level
+        if isinstance(cls_name, str):
+            print(f"{indent}{(cls_name)}")
+        elif isinstance(cls_name, type):
+            print(f"{indent}{cls_name.__name__}")
+
+
 if __name__ == "__main__":
     display(Exception, DFS_iter)
+
+    display(Exception, BFS_classes)
+    display(Exception, tree)
+
+    # for cls in DFS_classes(Exception):
+    #     print(cls)
+    # print('Done!')
